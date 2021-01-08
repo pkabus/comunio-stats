@@ -28,6 +28,8 @@ class CrawlClubSpider(CrawlSpider):
             item['id'] = re.search(r"[0-9]+", item['link'].__str__()).group()
             item['position'] = row.xpath(".//td[3]//span/text()").extract()
             item['points_during_current_season'] = row.xpath(".//td[4]/text()").extract()
+            item['club'] = response.xpath("//td[contains(@class,'clubPics')]/a//img[contains(@class, 'sel_border')]/@title").extract()
             item['market_value'] = row.xpath(".//td[5]/@data-value").extract()
+            item['created'] = now
             yield item
             

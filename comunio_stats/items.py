@@ -25,4 +25,5 @@ class PlayerItem(Item):
     position = Field()
     market_value = Field()
     points_during_current_season = Field()
+    club = Field()
     created = Field()

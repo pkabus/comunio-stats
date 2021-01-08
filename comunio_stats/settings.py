@@ -68,7 +68,9 @@ REDIRECT_ENABLED = False
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
 #    'comunio_stats.pipelines.ComunioStatsPipeline': 300,
-#}
+#
+
+FEED_EXPORT_ENCODING = 'utf-8'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
