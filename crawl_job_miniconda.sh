@@ -1,20 +1,21 @@
 #!/bin/bash
 
-#export PATH="/home/pi/miniconda3/bin:$PATH"
+###### ######
+# Miniconda and python 3.6 MANDATORY
+##### ######
+# reference stackoverflow conda@raspberrypi installation
+# install miniconda at /home/pi/miniconda3
+# https://stackoverflow.com/questions/39371772/how-to-install-anaconda-on-raspberry-pi-3-model-b
 
-# USAGE
-# Run 'y | ./crawl_job.sh' to automatically create the virtual environment (if not yet created)
-# otherwise './crawl_job.sh' is sufficient
-
+export PATH="/home/pi/miniconda3/bin:$PATH"
 # Functions are not exported by default to be made available in subshells
-# source ~/miniconda3/etc/profile.d/conda.sh
 
-# conda venv name
+# conda/scrapy variables
 VENV=env-comunio
-
+BASE_DIR=/home/pi/transfer/scrapy
+SCRAPY_PRJ=comunio_stats
 VENV_CREATED=$(conda env list | grep $VENV)
 
-sudo apt-get install python3 python3-dev python3-pip libxml2-dev libxslt1-dev zlib1g-dev libffi-dev libssl-dev
 
 if [ -z "$VENV_CREATED" ]
 then
@@ -26,14 +27,18 @@ pip install --upgrade pip
 pip install scrapy
 else
 # simply activate already existing conda venv
+echo "Activate virtual environment"
 source activate $VENV
 fi
 
+# cd to scrapy project folder where scrapy.cfg is located
+cd $BASE_DIR/$SCRAPY_PRJ
 
+# Run crawler
 timestamp=$(date +%s)
-
-# run crawler
+echo "Run crawler..."
 scrapy crawl crawl-clubs -o ${timestamp}_bundesliga_player.json
 
 # deactivate conda venv
+echo "Deactivate virtual environment"
 source deactivate
